@@ -1,12 +1,13 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import Task from "./components/Task";
+import { ThemeContext } from "./contexts/ThemeContext";
 
-const STORAGE_KEY = "my tasks";
+const TASKS_STORAGE_KEY = "my tasks";
 
 export default function App() {
-  const storedTasks = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  const { theme, setTheme } = useContext(ThemeContext);
+  const storedTasks = JSON.parse(localStorage.getItem(TASKS_STORAGE_KEY));
   const [tasks, setTasks] = useState(storedTasks || {});
-
   const inputRef = useRef(null);
 
   //functions
@@ -34,7 +35,7 @@ export default function App() {
 
   //Local Storage functions:
   function saveTasksinLocalStorage() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasks));
   }
 
   // Effects:
@@ -43,8 +44,13 @@ export default function App() {
   }, [tasks]);
 
   return (
-    <div>
-      <h1>To Do App</h1>
+    <div className="app-container" data-theme={theme}>
+      <div className="themes-container">
+        <button onClick={() => setTheme("light")}>light</button>
+        <button onClick={() => setTheme("dark")}>dark</button>
+        <button onClick={() => setTheme("green")}>green</button>
+      </div>
+      <h1 className="header">To Do App</h1>
       <form action="" onSubmit={handleSubmit}>
         <input type="text" ref={inputRef} />
         <button>Add task</button>

@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export default function Task({ task, taskId, setTasks }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState(task);
+  const { theme, setTheme } = useContext(ThemeContext);
 
   function handleDeleteTask() {
     setTasks((currentTasks) => {
@@ -34,7 +36,7 @@ export default function Task({ task, taskId, setTasks }) {
   }
 
   return (
-    <li onDoubleClick={handleEditTask}>
+    <li className="task" onDoubleClick={handleEditTask}>
       {isEditing ? (
         <input
           type="text"
