@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function App() {
   const [tasks, setTasks] = useState({
@@ -6,22 +6,21 @@ export default function App() {
     46567: "learn React",
   });
 
-  const [newTask, setNewTask] = useState("");
+  const inputRef = useRef(null);
 
-  function handleClick() {
-    if (newTask === "") {
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (inputRef.current.value === "") {
       return;
     }
-
     let taskID = crypto.randomUUID();
-    setTasks((currentTasks) => {
-      return { ...currentTasks, [taskID]: newTask };
-    });
-    setNewTask("");
-  }
+    let inputValue = inputRef.current.value;
 
-  function handleChange(e) {
-    setNewTask(e.target.value);
+    setTasks((currentTasks) => {
+      return { ...currentTasks, [taskID]: inputValue };
+    });
+
+    inputRef.current.value = "";
   }
 
   console.log(tasks);
@@ -29,8 +28,10 @@ export default function App() {
   return (
     <div>
       <h1>To Do App</h1>
-      <input type="text" onChange={handleChange} value={newTask} />
-      <button onClick={handleClick}>Add task</button>
+      <form action="" onSubmit={handleSubmit}>
+        <input type="text" ref={inputRef} />
+        <button>Add task</button>
+      </form>
     </div>
   );
 }
