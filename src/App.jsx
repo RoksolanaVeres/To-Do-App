@@ -1,18 +1,20 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import Task from "./components/Task";
+
+const STORAGE_KEY = "my tasks";
 
 export default function App() {
-  const [tasks, setTasks] = useState({
-    2323232: "clean the room",
-    46567: "learn React",
-  });
+  const storedTasks = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  const [tasks, setTasks] = useState(storedTasks || {});
 
   const inputRef = useRef(null);
 
+  //functions
   function handleSubmit(e) {
     e.preventDefault();
     if (inputRef.current.value === "") {
       return;
-    }
+    } // prevents adding empty tasks
     let taskID = crypto.randomUUID();
     let inputValue = inputRef.current.value;
 
@@ -23,7 +25,22 @@ export default function App() {
     inputRef.current.value = "";
   }
 
-  console.log(tasks);
+  function handleDeleteAll() {
+    if (Object.keys(tasks).length === 0) {
+      return;
+    } // prevents multiple "delete all" clicks in a row
+    setTasks({});
+  }
+
+  //Local Storage functions:
+  function saveTasksinLocalStorage() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+  }
+
+  // Effects:
+  useEffect(() => {
+    saveTasksinLocalStorage();
+  }, [tasks]);
 
   return (
     <div>
@@ -31,7 +48,15 @@ export default function App() {
       <form action="" onSubmit={handleSubmit}>
         <input type="text" ref={inputRef} />
         <button>Add task</button>
+        <button type="button" onClick={handleDeleteAll}>
+          Delete ALL tasks
+        </button>
       </form>
+      <ol>
+        {Object.entries(tasks).map(([taskId, task]) => (
+          <Task key={taskId} taskId={taskId} task={task} setTasks={setTasks} />
+        ))}
+      </ol>
     </div>
   );
 }
