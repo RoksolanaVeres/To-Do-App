@@ -8,11 +8,11 @@ export default function ThemeContextProvider({ children }) {
   const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
   const [theme, setTheme] = useState(storedTheme || "light");
 
-  function setThemeInLocalStorage() {
+  function saveThemeInLocalStorage() {
     localStorage.setItem(THEME_STORAGE_KEY, theme);
   }
 
-  useEffect(setThemeInLocalStorage, [theme]);
+  useEffect(saveThemeInLocalStorage, [theme]);
 
   const value = { theme, setTheme };
   return (

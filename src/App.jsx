@@ -1,68 +1,107 @@
-import { useState, useRef, useEffect, useContext } from "react";
+import { useRef, useContext } from "react";
 import Task from "./components/Task";
 import { ThemeContext } from "./contexts/ThemeContext";
-
-const TASKS_STORAGE_KEY = "my tasks";
+import { TasksContext } from "./contexts/TasksContext";
+import MotivationQuotes from "./components/MotivationQuotes";
+import ThemeButtons from "./components/ThemeButtons";
 
 export default function App() {
-  const { theme, setTheme } = useContext(ThemeContext);
-  const storedTasks = JSON.parse(localStorage.getItem(TASKS_STORAGE_KEY));
-  const [tasks, setTasks] = useState(storedTasks || {});
+  const { theme } = useContext(ThemeContext);
+  const { tasks, setTasks } = useContext(TasksContext);
   const inputRef = useRef(null);
 
-  //functions
+  const allTasks = Object.keys(tasks).length;
+  const completedTasks = Object.values(tasks).filter(
+    (task) => task.completed === true
+  ).length;
+  const remainingTasks = allTasks - completedTasks;
+
+  //setting theme attribute to body
+  document.getElementById("body").setAttribute("data-theme", theme);
+
+  //Functions
   function handleSubmit(e) {
     e.preventDefault();
+
     if (inputRef.current.value === "") {
       return;
-    } // prevents adding empty tasks
+    }
+
     let taskID = crypto.randomUUID();
     let inputValue = inputRef.current.value;
 
     setTasks((currentTasks) => {
-      return { ...currentTasks, [taskID]: inputValue };
+      return {
+        ...currentTasks,
+        [taskID]: { task: inputValue, completed: false },
+      };
     });
 
     inputRef.current.value = "";
   }
 
+  function handleRemoveCompleted() {
+    setTasks((currentTasks) => {
+      const newTasks = { ...currentTasks };
+      Object.keys(newTasks).forEach((key) => {
+        if (newTasks[key].completed) {
+          delete newTasks[key];
+        }
+      });
+      return newTasks;
+    });
+  }
+
   function handleDeleteAll() {
     if (Object.keys(tasks).length === 0) {
       return;
-    } // prevents multiple "delete all" clicks in a row
+    }
     setTasks({});
   }
 
-  //Local Storage functions:
-  function saveTasksinLocalStorage() {
-    localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasks));
-  }
-
-  // Effects:
-  useEffect(() => {
-    saveTasksinLocalStorage();
-  }, [tasks]);
-
   return (
-    <div className="app-container" data-theme={theme}>
-      <div className="themes-container">
-        <button onClick={() => setTheme("light")}>light</button>
-        <button onClick={() => setTheme("dark")}>dark</button>
-        <button onClick={() => setTheme("green")}>green</button>
-      </div>
-      <h1 className="header">To Do App</h1>
-      <form action="" onSubmit={handleSubmit}>
-        <input type="text" ref={inputRef} />
-        <button>Add task</button>
-        <button type="button" onClick={handleDeleteAll}>
-          Delete ALL tasks
-        </button>
-      </form>
-      <ol>
-        {Object.entries(tasks).map(([taskId, task]) => (
-          <Task key={taskId} taskId={taskId} task={task} setTasks={setTasks} />
-        ))}
-      </ol>
+    <div className="app-container">
+      <header className="header-container">
+        <ThemeButtons />
+
+        {theme === "motivation" && <MotivationQuotes />}
+
+        <form action="" onSubmit={handleSubmit} className="form-container">
+          <input
+            type="text"
+            ref={inputRef}
+            className="form-input"
+            placeholder="Create a new todo..."
+          />
+        </form>
+      </header>
+
+      <main className="main-container">
+        {tasks && (
+          <div className="tasks-container">
+            <ul className="tasks-list">
+              {Object.entries(tasks).map(([taskId, { task, completed }]) => (
+                <Task
+                  key={taskId}
+                  taskId={taskId}
+                  task={task}
+                  completed={completed}
+                />
+              ))}
+            </ul>
+          </div>
+        )}
+        <div className="results-container">
+          <p>
+            All tasks:{allTasks} Completed:{completedTasks} Remaining:
+            {remainingTasks}
+          </p>
+          <button onClick={handleRemoveCompleted}>Remove completed</button>
+          <button type="button" onClick={handleDeleteAll}>
+            Remove ALL
+          </button>
+        </div>
+      </main>
     </div>
   );
 }
