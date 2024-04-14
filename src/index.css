@@ -136,7 +136,7 @@ body {
   gap: 10px;
 }
 
-.completed-task {
+.task-checkbox:checked + .task-text {
   text-decoration: line-through;
   text-decoration-color: red;
 }
@@ -160,4 +160,13 @@ body {
 .theme-icon {
   width: 30px;
   padding: 5px;
+}
+
+/* results */
+.results-container {
+  margin-top: 20px;
+  width: 80%;
+  max-width: 500px;
+  display: flex;
+  justify-content: space-between;
 }

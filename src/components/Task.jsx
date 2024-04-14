@@ -73,10 +73,7 @@ export default function Task({ task, taskId, completed }) {
             className="task-checkbox"
             onChange={handleTaskCheck}
           />
-          <label
-            htmlFor={task}
-            className={completed ? "completed-task" : undefined}
-          >
+          <label htmlFor={task} className="task-text">
             {task}
           </label>
         </div>
