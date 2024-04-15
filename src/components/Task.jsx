@@ -1,16 +1,12 @@
 import { useState, useContext } from "react";
-import { ThemeContext } from "../contexts/ThemeContext";
 import { TasksContext } from "../contexts/TasksContext";
-import DeleteIcon from "../assets/icons/delete-icon.svg";
-import EditIcon from "../assets/icons/edit-icon.svg";
+import { BsPencilFill } from "react-icons/bs";
+import { VscChromeClose } from "react-icons/vsc";
 
-export default function Task({ task, taskId, completed }) {
+export default function Task({ taskId, task, completed }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState(task);
-  const { theme } = useContext(ThemeContext);
-  const { tasks, setTasks } = useContext(TasksContext);
-
-  console.log(tasks);
+  const { setTasks } = useContext(TasksContext);
 
   // functions
   function handleDeleteTask() {
@@ -59,6 +55,7 @@ export default function Task({ task, taskId, completed }) {
     <li className="task-li">
       {isEditing ? (
         <input
+          className="editing-input"
           type="text"
           onChange={handleEditInputChange}
           onKeyDown={handleEditSave}
@@ -69,23 +66,26 @@ export default function Task({ task, taskId, completed }) {
           <input
             type="checkbox"
             checked={completed}
-            id={task}
+            id={taskId}
             className="task-checkbox"
             onChange={handleTaskCheck}
           />
-          <label htmlFor={task} className="task-text">
+          <label htmlFor={taskId} className="task-text">
             {task}
           </label>
         </div>
       )}
 
       <div className="edit-delete-btns__container">
-        <button onClick={handleEditTask} className="button">
-          <img src={EditIcon} className="task-manage-button" alt="" />
+        <button onClick={handleEditTask} className="button task-manage-button">
+          <BsPencilFill className="task-manage-icon" />
         </button>
 
-        <button onClick={handleDeleteTask} className="button">
-          <img src={DeleteIcon} className="task-manage-button" alt="" />
+        <button
+          onClick={handleDeleteTask}
+          className="button task-manage-button"
+        >
+          <VscChromeClose className="task-manage-icon" />
         </button>
       </div>
     </li>

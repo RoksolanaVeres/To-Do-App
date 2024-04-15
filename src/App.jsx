@@ -2,7 +2,6 @@ import { useRef, useContext, useState } from "react";
 import Task from "./components/Task";
 import { ThemeContext } from "./contexts/ThemeContext";
 import { TasksContext } from "./contexts/TasksContext";
-import MotivationQuotes from "./components/MotivationQuotes";
 import ThemeButtons from "./components/ThemeButtons";
 
 export default function App() {
@@ -85,63 +84,92 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <header className="header-container">
-        <ThemeButtons />
+      <div
+        className={`overlay-container ${
+          Object.keys(tasks).length > 0 ? "overlay" : undefined
+        }`}
+      >
+        <header className="header-container">
+          <ThemeButtons />
+          <form action="" onSubmit={handleSubmit} className="form-container">
+            <input
+              type="text"
+              ref={inputRef}
+              className="form-input"
+              placeholder="Create a new todo..."
+            />
+          </form>
+        </header>
 
-        {theme === "motivation" && <MotivationQuotes />}
+        <main className="main-container">
+          {Object.keys(tasks).length > 0 && (
+            <>
+              <ul className="tasks-list">
+                {Object.entries(tasksToDisplay).map(
+                  ([taskId, { task, completed }]) => (
+                    <Task
+                      key={taskId}
+                      taskId={taskId}
+                      task={task}
+                      completed={completed}
+                    />
+                  )
+                )}
+              </ul>
 
-        <form action="" onSubmit={handleSubmit} className="form-container">
-          <input
-            type="text"
-            ref={inputRef}
-            className="form-input"
-            placeholder="Create a new todo..."
-          />
-        </form>
-      </header>
+              <div className="categories-deleteBtns__container">
+                <button
+                  type="button"
+                  onClick={handleDeleteAll}
+                  className="button remove-button"
+                >
+                  Remove all
+                </button>
+                <div className="categories__container">
+                  <button
+                    onClick={() => setTaskCategory("all")}
+                    className={`button category-button ${
+                      taskCategory === "all"
+                        ? "category-button-active"
+                        : undefined
+                    }`}
+                  >
+                    All({allTasksNum})
+                  </button>
+                  <button
+                    onClick={() => setTaskCategory("active")}
+                    className={`button category-button ${
+                      taskCategory === "active"
+                        ? "category-button-active"
+                        : undefined
+                    }`}
+                  >
+                    Active({activeTasksNum})
+                  </button>
+                  <button
+                    onClick={() => setTaskCategory("completed")}
+                    className={`button category-button ${
+                      taskCategory === "completed"
+                        ? "category-button-active"
+                        : undefined
+                    }`}
+                  >
+                    Completed({completedTasksNum})
+                  </button>
+                </div>
 
-      <main className="main-container">
-        {tasks && (
-          <div className="tasks-container">
-            <ul className="tasks-list">
-              {Object.entries(tasksToDisplay).map(
-                ([taskId, { task, completed }]) => (
-                  <Task
-                    key={taskId}
-                    taskId={taskId}
-                    task={task}
-                    completed={completed}
-                  />
-                )
-              )}
-            </ul>
-          </div>
-        )}
-        <div className="results-container">
-          <div className="show-results__container">
-            <button onClick={() => setTaskCategory("all")}>
-              All ({allTasksNum})
-            </button>
-            <button onClick={() => setTaskCategory("active")}>
-              Active ({activeTasksNum})
-            </button>
-            <button onClick={() => setTaskCategory("completed")}>
-              Completed ({completedTasksNum})
-            </button>
-          </div>
-          <div className="remove-results__container">
-            <button
-              onClick={handleRemoveCompleted}
-              disabled={!completedTasksNum}
-            >
-              Remove completed
-            </button>
-            <button type="button" onClick={handleDeleteAll}>
-              Remove ALL
-            </button>
-          </div>
-        </div>
-      </main>
+                <button
+                  onClick={handleRemoveCompleted}
+                  disabled={!completedTasksNum}
+                  className="button remove-button"
+                >
+                  Remove completed
+                </button>
+              </div>
+            </>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

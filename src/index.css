@@ -6,31 +6,69 @@
 
 :root {
   --border-radius: 5px;
-  --background-color: rgb(246, 246, 246);
-  --foreground-color: rgb(255, 0, 144);
-  --foreground-opaque: rgba(255, 0, 144, 0.4);
-  --primary-text-color: rgb(10, 10, 10);
-  --secondary-text-color: rgb(255, 255, 255);
+  --font-size-primary: 17px;
+  --font-size-secondary: 13px;
   --background-image: url(./assets/images/inspiration-theme.jpg);
 }
 
-[data-theme="motivation"] {
-  --background-color: rgb(26, 60, 84);
-  --foreground-color: rgb(53, 112, 154);
-  --foreground-opaque: rgb(53, 112, 154, 0.4);
-  --primary-text-color: rgb(233, 237, 240);
-  --secondary-text-color: rgb(10, 10, 10);
-  --highlight-color: rgb(122, 148, 183);
-  --background-image: url(./assets/images/forest-haze.jpg);
+[data-theme="light"] {
+  --background-image: url(./assets/images/light.jpg);
+  --background-overlay: rgba(231, 231, 231, 0.559);
+  --background-color-primary: rgb(190, 190, 190);
+  --background-color-secondary: rgb(219, 219, 219);
+  --background-opaque-primary: rgba(190, 190, 190, 0.5);
+  --background-opaque-secondary: rgba(219, 219, 219, 0.5);
+  --background-color-btn-disabled: rgba(162, 162, 162, 0.637);
+  --background-color-btn-task: rgba(130, 130, 130, 0.4);
+  --text-color-primary: rgb(0, 0, 0);
+  --text-color-secondary: rgb(78, 78, 78);
+  --highlight-color: rgba(180, 218, 221, 0.69);
+  --accent-color: rgb(240, 19, 156);
 }
 
-[data-theme="cat"] {
-  --background-color: rgb(133, 41, 158);
-  --foreground-color: rgb(53, 112, 154);
-  --foreground-opaque: rgb(53, 112, 154, 0.4);
-  --primary-text-color: rgb(233, 237, 240);
-  --secondary-text-color: rgb(10, 10, 10);
-  --background-image: url(./assets/images/cat-dark.jpg);
+[data-theme="dark"] {
+  --background-image: url(./assets/images/dark.jpg);
+  --background-overlay: rgba(82, 82, 82, 0.559);
+  --background-color-primary: rgb(12, 13, 16);
+  --background-color-secondary: rgb(29, 34, 42);
+  --background-opaque-primary: rgba(12, 13, 16, 0.4);
+  --background-opaque-secondary: rgba(29, 34, 42, 0.4);
+  --background-color-btn-disabled: rgba(162, 162, 162, 0.637);
+  --background-color-btn-task: rgba(130, 130, 130, 0.4);
+  --text-color-primary: rgb(238, 234, 230);
+  --text-color-secondary: rgb(121, 121, 121);
+  --highlight-color: rgb(64, 75, 80);
+  --accent-color: rgb(61, 133, 221);
+}
+
+[data-theme="green"] {
+  --background-image: url(./assets/images/greenery.jpg);
+  --background-overlay: rgba(229, 238, 224, 0.796);
+  --background-color-primary: rgb(70, 92, 53);
+  --background-color-secondary: rgb(111, 140, 88);
+  --background-opaque-primary: rgba(70, 92, 53, 0.4);
+  --background-opaque-secondary: rgba(111, 140, 88, 0.4);
+  --background-color-btn-disabled: rgba(162, 162, 162, 0.637);
+  --background-color-btn-task: rgba(255, 255, 255, 0.4);
+  --text-color-primary: rgb(255, 254, 253);
+  --text-color-secondary: rgb(156, 177, 149);
+  --highlight-color: rgb(151, 125, 95);
+  --accent-color: rgb(250, 137, 8);
+}
+
+[data-theme="floral"] {
+  --background-image: url(./assets/images/flower.jpg);
+  --background-overlay: rgba(227, 224, 224, 0.684);
+  --background-color-primary: rgb(255, 199, 189);
+  --background-color-secondary: rgb(228, 173, 175);
+  --background-opaque-primary: rgba(255, 199, 189, 0.4);
+  --background-opaque-secondary: rgba(228, 173, 175, 0.4);
+  --background-color-btn-disabled: rgba(206, 206, 206, 0.637);
+  --background-color-btn-task: rgba(255, 255, 255, 0.4);
+  --text-color-primary: rgb(48, 11, 2);
+  --text-color-secondary: rgb(130, 102, 95);
+  --highlight-color: rgb(239, 178, 201);
+  --accent-color: rgb(238, 46, 120);
 }
 
 body {
@@ -41,21 +79,26 @@ body {
   cursor: pointer;
   border: none;
   border-radius: var(--border-radius);
+  font-size: var(--font-size-secondary);
+  font-weight: bold;
 }
 
 .app-container {
   min-height: 100vh;
-  display: grid;
-  width: auto;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1.5fr 3fr;
-}
-
-.header-container {
-  padding: 10px;
   background-image: var(--background-image);
   background-size: cover;
   background-position: center;
+}
+
+.overlay-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1.5fr 3fr;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.header-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,87 +106,119 @@ body {
   justify-content: space-between;
 }
 
-.motivation-container {
-  align-self: flex-start;
-}
-
 .form-container {
   width: 80%;
   max-width: 500px;
   display: flex;
-  height: 35%;
+  margin-bottom: 25px;
 }
 
 .form-input {
   height: 50px;
   flex: 1;
   padding: 10px;
-  font-size: 20px;
-  background-color: var(--foreground-color);
-  color: var(--primary-text-color);
+  font-size: var(--font-size-primary);
+  background-color: var(--background-color-primary);
+  color: var(--text-color-primary);
   border: none;
   border-radius: var(--border-radius);
 }
 
 .form-input::placeholder {
-  color: var(--primary-text-color);
+  color: var(--text-color-primary);
   font-style: italic;
+  font-weight: 600;
   opacity: 0.5;
 }
 
+.editing-input {
+  flex: 1;
+  padding: 5px;
+  font-size: var(--font-size-primary);
+  background-color: var(--background-opaque-primary);
+  color: var(--text-color-primary);
+  border: none;
+  border-radius: var(--border-radius);
+}
+
+/* main container */
 .main-container {
-  background-color: var(--background-color);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* tasks */
-.tasks-container {
-  background-color: var(--foreground-color);
-  width: 80%;
-  max-width: 500px;
-  margin-top: -2%;
-  border-radius: var(--border-radius);
+.overlay {
+  background-color: var(--background-overlay);
+  box-shadow: 0 0 10px 10px var(--background-overlay);
 }
 
+/* tasks */
 .tasks-list {
   list-style-type: none;
+  width: 80%;
+  max-width: 500px;
   display: grid;
-  color: var(--primary-text-color);
-  font-size: 20px;
+  color: var(--text-color-primary);
+  font-size: var(--font-size-primary);
+  gap: 5px;
 }
 
 .task-li {
+  background-color: var(--background-color-secondary);
   cursor: pointer;
-  padding: 10px;
+  padding: 5px;
   display: flex;
   gap: 10px;
   justify-content: space-between;
+  align-items: center;
+  border-radius: var(--border-radius);
 }
 
 .task-li:hover {
   background-color: var(--highlight-color);
+  border-radius: var(--border-radius);
+}
+
+.task-manage-icon {
+  width: 27px;
+  height: 27px;
+  padding: 6px;
 }
 
 .task-manage-button {
-  width: 20px;
-  padding: 5px;
+  background-color: var(--background-color-btn-task);
+  height: 27px;
+}
+
+.task-manage-button:hover {
+  background-color: var(--accent-color);
 }
 
 .task-check__container {
   display: flex;
+  flex: 1;
   gap: 10px;
+}
+
+.task-checkbox {
+  cursor: pointer;
+}
+
+.task-text {
+  cursor: pointer;
+  flex: 1;
 }
 
 .task-checkbox:checked + .task-text {
   text-decoration: line-through;
-  text-decoration-color: red;
+  text-decoration-color: var(--accent-color);
+  text-decoration-thickness: 2px;
 }
 
 .edit-delete-btns__container {
   display: flex;
-  gap: 10px;
+  gap: 5px;
 }
 
 /* themes */
@@ -154,19 +229,67 @@ body {
 }
 
 .theme-button {
-  background-color: var(--foreground-opaque);
+  background-color: var(--background-opaque-secondary);
+}
+
+.theme-button:hover {
+  background-color: var(--background-opaque-primary);
 }
 
 .theme-icon {
-  width: 30px;
-  padding: 5px;
+  width: 35px;
+  height: 35px;
+  padding: 6px;
+  color: var(--accent-color);
 }
 
-/* results */
-.results-container {
-  margin-top: 20px;
+/* tasks' categories & delete buttons */
+.categories-deleteBtns__container {
+  margin-top: 25px;
   width: 80%;
   max-width: 500px;
   display: flex;
   justify-content: space-between;
+  align-items: stretch;
+  background-color: var(--background-color-primary);
+  border-radius: var(--border-radius);
+  padding: 5px;
+}
+
+.categories__container {
+  display: flex;
+  gap: 10px;
+}
+
+.category-button {
+  background-color: transparent;
+  color: var(--text-color-secondary);
+}
+
+.category-button:hover {
+  color: var(--text-color-primary);
+}
+
+.category-button-active {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.remove-button {
+  background-color: var(--background-opaque-secondary);
+  padding: 5px;
+  color: var(--text-color-primary);
+  height: 27px;
+}
+
+.remove-button:hover {
+  background-color: var(--highlight-color);
+}
+
+button:disabled {
+  background-color: var(--background-color-btn-disabled);
+}
+
+button:disabled:hover {
+  background-color: var(--background-color-btn-disabled);
 }
