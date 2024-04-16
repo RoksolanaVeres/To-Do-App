@@ -4,7 +4,7 @@ import { PiFlower } from "react-icons/pi";
 import { BiLeaf, BiMoon, BiSun } from "react-icons/bi";
 
 export default function ThemeButtons() {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { setTheme } = useContext(ThemeContext);
   return (
     <div className="themes-container">
       <button className="button theme-button" onClick={() => setTheme("light")}>

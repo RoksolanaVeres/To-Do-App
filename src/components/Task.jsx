@@ -11,7 +11,7 @@ export default function Task({ taskId, task, completed }) {
   // functions
   function handleDeleteTask() {
     setTasks((currentTasks) => {
-      const updatedTasks = { ...currentTasks };
+      const updatedTasks = structuredClone(currentTasks);
       delete updatedTasks[taskId];
       return updatedTasks;
     });
@@ -34,7 +34,7 @@ export default function Task({ taskId, task, completed }) {
       setIsEditing(false);
 
       setTasks((currentTasks) => {
-        const newTasks = { ...currentTasks };
+        const newTasks = structuredClone(currentTasks);
         newTasks[taskId].task = editedTask;
         newTasks[taskId].completed = false;
         return newTasks;
@@ -44,8 +44,8 @@ export default function Task({ taskId, task, completed }) {
 
   function handleTaskCheck(e) {
     setTasks((currentTasks) => {
-      const newTasks = { ...currentTasks };
-      newTasks[taskId].completed = e.target.checked;
+      const newTasks = structuredClone(currentTasks);
+      newTasks[taskId].completed = !newTasks[taskId].completed;
 
       return newTasks;
     });

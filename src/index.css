@@ -6,69 +6,128 @@
 
 :root {
   --border-radius: 5px;
-  --font-size-primary: 17px;
+  --font-size-primary: 18px;
   --font-size-secondary: 13px;
   --background-image: url(./assets/images/inspiration-theme.jpg);
+  --square-btn-lg: 35px;
+  --square-btn-sm: 25px;
+  --transition: all 0.1s ease-in;
 }
 
 [data-theme="light"] {
   --background-image: url(./assets/images/light.jpg);
-  --background-overlay: rgba(231, 231, 231, 0.559);
-  --background-color-primary: rgb(190, 190, 190);
-  --background-color-secondary: rgb(219, 219, 219);
-  --background-opaque-primary: rgba(190, 190, 190, 0.5);
-  --background-opaque-secondary: rgba(219, 219, 219, 0.5);
-  --background-color-btn-disabled: rgba(162, 162, 162, 0.637);
-  --background-color-btn-task: rgba(130, 130, 130, 0.4);
-  --text-color-primary: rgb(0, 0, 0);
-  --text-color-secondary: rgb(78, 78, 78);
-  --highlight-color: rgba(180, 218, 221, 0.69);
-  --accent-color: rgb(240, 19, 156);
+  --background-overlay: rgba(253, 253, 253, 0.758);
+
+  /* background */
+  --background-color-primary: rgb(198, 198, 198); /*main input */
+  --background-color-secondary: rgb(208, 208, 208); /*tasks li */
+  --background-color-secondary-lighter: rgb(236, 236, 236); /*tasks li:hover */
+
+  /* forefront */
+  --forefront-color-primary: rgb(23, 23, 23); /*theme icons */
+  --forefront-color-secondary: rgb(51, 51, 51); /*edit, delete icons */
+
+  /* text colors */
+  --text-color-primary: rgb(0, 0, 0); /*input, tasks, (edit, delete):hover, remove, category:hover */
+  --text-color-secondary: rgb(83, 83, 83); /*category buttons*/
+  --text-color-contrast: rgb(0, 0, 0); /*editing input text*/
+
+  /* buttons */
+  --theme-background-color-primary: rgb(223, 223, 223); /*theme icons background*/
+  --theme-background-color-secondary: rgb(255, 255, 255); /*theme icons background on hover */
+  --taskBtn-background-color-primary: rgb(204, 178, 134); /*empty checkbox, edit, delete button's background*/
+  --disabledBtn-color: rgb(135, 135, 135);
+
+  /* primary color */
+  --primary-color: rgb(218, 142, 2); /*inputs on focus, task manage btns:hover, active category, checked checkbox bg, remove btn:hover, task crossing line*/
+  --primary-shade: rgb(217, 207, 186); /*editing input bg*/
 }
 
 [data-theme="dark"] {
   --background-image: url(./assets/images/dark.jpg);
-  --background-overlay: rgba(82, 82, 82, 0.559);
-  --background-color-primary: rgb(12, 13, 16);
-  --background-color-secondary: rgb(29, 34, 42);
-  --background-opaque-primary: rgba(12, 13, 16, 0.4);
-  --background-opaque-secondary: rgba(29, 34, 42, 0.4);
-  --background-color-btn-disabled: rgba(162, 162, 162, 0.637);
-  --background-color-btn-task: rgba(130, 130, 130, 0.4);
-  --text-color-primary: rgb(238, 234, 230);
-  --text-color-secondary: rgb(121, 121, 121);
-  --highlight-color: rgb(64, 75, 80);
-  --accent-color: rgb(61, 133, 221);
+  --background-overlay: rgba(31, 31, 31, 0.773);
+
+  /* background */
+  --background-color-primary: rgb(12, 13, 16); /*main input */
+  --background-color-secondary: rgb(49, 57, 69); /*tasks li */
+  --background-color-secondary-lighter: rgb(62, 72, 88); /*tasks li on hover */
+
+  /* forefront */
+  --forefront-color-primary: rgb(255, 255, 255); /*theme icons */
+  --forefront-color-secondary: rgb(18, 18, 18); /*edit, delete icons */
+
+  /* text colors */
+  --text-color-primary: rgb(238, 234, 230); /*main input, tasks, edit, delete icons on hover, remove btns, category btns on hover */
+  --text-color-secondary: rgb(121, 121, 121); /*category buttons*/
+  --text-color-contrast: rgb(255, 255, 254); /*editing input text*/
+
+  /* buttons */
+  --theme-background-color-primary: rgb(68, 68, 68); /*theme icons background*/
+  --theme-background-color-secondary: rgb(52, 52, 52); /*theme icons background on hover */
+  --taskBtn-background-color-primary: rgb(197, 216, 253); /*empty checkbox, edit, delete button's background*/
+  --disabledBtn-color: rgb(64, 64, 64);
+
+  /* primary color */
+  --primary-color: rgb(47, 93, 185); /*inputs on focus, task manage btns:hover, active category, checked checkbox bg, remove btn:hover, task crossing line*/
+  --primary-shade: rgb(29, 47, 84); /*editing input bg*/
 }
 
 [data-theme="green"] {
   --background-image: url(./assets/images/greenery.jpg);
-  --background-overlay: rgba(229, 238, 224, 0.796);
-  --background-color-primary: rgb(70, 92, 53);
-  --background-color-secondary: rgb(111, 140, 88);
-  --background-opaque-primary: rgba(70, 92, 53, 0.4);
-  --background-opaque-secondary: rgba(111, 140, 88, 0.4);
-  --background-color-btn-disabled: rgba(162, 162, 162, 0.637);
-  --background-color-btn-task: rgba(255, 255, 255, 0.4);
-  --text-color-primary: rgb(255, 254, 253);
-  --text-color-secondary: rgb(156, 177, 149);
-  --highlight-color: rgb(151, 125, 95);
-  --accent-color: rgb(250, 137, 8);
+  --background-overlay: rgba(240, 247, 237, 0.753);
+
+  /* background */
+  --background-color-primary: rgb(72, 118, 38); /*main input */
+  --background-color-secondary: rgb(84, 107, 66); /*tasks li */
+  --background-color-secondary-lighter: rgb(118, 151, 92); /*tasks li on hover */
+
+  /* forefront */
+  --forefront-color-primary: rgb(56, 121, 13); /*theme icons */
+  --forefront-color-secondary: rgb(18, 18, 18); /*edit, delete icons */
+
+  /* text colors */
+  --text-color-primary: rgb(244, 242, 240); /*main input, tasks, edit, delete icons on hover, remove btns, category btns on hover */
+  --text-color-secondary: rgb(175, 193, 176); /*category buttons*/
+  --text-color-contrast: rgb(255, 255, 254); /*editing input text*/
+
+  /* buttons */
+  --theme-background-color-primary: rgb(227, 233, 229); /*theme icons background*/
+  --theme-background-color-secondary: rgb(219, 224, 221); /*theme icons background on hover */
+  --taskBtn-background-color-primary: rgb(193, 205, 192); /*empty checkbox, edit, delete button's background*/
+  --disabledBtn-color: rgb(174, 174, 174);
+
+  /* primary color */
+  --primary-color: rgb(65, 27, 16); /*inputs on focus, task manage btns:hover, active category, checked checkbox bg, remove btn:hover, task crossing line*/
+  --primary-shade: rgba(65, 27, 16, 0.63); /*editing input bg*/
 }
 
 [data-theme="floral"] {
   --background-image: url(./assets/images/flower.jpg);
-  --background-overlay: rgba(227, 224, 224, 0.684);
-  --background-color-primary: rgb(255, 199, 189);
-  --background-color-secondary: rgb(228, 173, 175);
-  --background-opaque-primary: rgba(255, 199, 189, 0.4);
-  --background-opaque-secondary: rgba(228, 173, 175, 0.4);
-  --background-color-btn-disabled: rgba(206, 206, 206, 0.637);
-  --background-color-btn-task: rgba(255, 255, 255, 0.4);
-  --text-color-primary: rgb(48, 11, 2);
-  --text-color-secondary: rgb(130, 102, 95);
-  --highlight-color: rgb(239, 178, 201);
-  --accent-color: rgb(238, 46, 120);
+  --background-overlay: rgba(252, 251, 251, 0.733);
+
+  /* background */
+  --background-color-primary: rgb(255, 207, 197); /*main input */
+  --background-color-secondary: rgb(228, 173, 175); /*tasks li */
+  --background-color-secondary-lighter: rgb(244, 186, 188); /*tasks li on hover */
+
+  /* forefront */
+  --forefront-color-primary: rgb(177, 17, 65); /*theme icons */
+  --forefront-color-secondary: rgb(18, 18, 18); /*edit, delete icons */
+
+  /* text colors */
+  --text-color-primary: rgb(48, 11, 2); /*main input, tasks, edit, delete icons on hover, remove btns, category btns on hover */
+  --text-color-secondary: rgb(130, 102, 95); /*category buttons*/
+  --text-color-contrast: rgb(255, 255, 254); /*editing input text*/
+
+  /* buttons */
+  --theme-background-color-primary: rgb(234, 215, 216); /*theme icons background*/
+  --theme-background-color-secondary: rgb(249, 232, 233); /*theme icons background on hover */
+  --taskBtn-background-color-primary: rgb(252, 214, 226); /*empty checkbox, edit, delete button's background*/
+  --disabledBtn-color: rgb(174, 174, 174);
+
+  /* primary color */
+  --primary-color: rgb(241, 75, 128); /*inputs on focus, task manage btns:hover, active category, checked checkbox bg, remove btn:hover, task crossing line*/
+  --primary-shade: rgba(170, 68, 100, 0.518); /*editing input bg*/
 }
 
 body {
@@ -122,6 +181,11 @@ body {
   color: var(--text-color-primary);
   border: none;
   border-radius: var(--border-radius);
+  outline: 2px solid transparent;
+}
+
+.form-input:focus {
+  outline: 2px solid var(--primary-color);
 }
 
 .form-input::placeholder {
@@ -135,10 +199,15 @@ body {
   flex: 1;
   padding: 5px;
   font-size: var(--font-size-primary);
-  background-color: var(--background-opaque-primary);
-  color: var(--text-color-primary);
+  background-color: var(--primary-shade);
+  color: var(--text-color-contrast);
   border: none;
   border-radius: var(--border-radius);
+  outline: 2px solid transparent;
+}
+
+.editing-input:focus {
+  outline: 2px solid var(--primary-color);
 }
 
 /* main container */
@@ -173,36 +242,67 @@ body {
   justify-content: space-between;
   align-items: center;
   border-radius: var(--border-radius);
+  transition: var(--transition);
 }
 
 .task-li:hover {
-  background-color: var(--highlight-color);
+  background-color: var(--background-color-secondary-lighter);
   border-radius: var(--border-radius);
 }
 
 .task-manage-icon {
-  width: 27px;
-  height: 27px;
-  padding: 6px;
+  width: var(--square-btn-sm);
+  height: var(--square-btn-sm);
+  color: var(--forefront-color-secondary);
+  padding: 5px;
 }
 
 .task-manage-button {
-  background-color: var(--background-color-btn-task);
-  height: 27px;
+  background-color: var(--taskBtn-background-color-primary);
+  width: var(--square-btn-sm);
+  height: var(--square-btn-sm);
+  transition: var(--transition);
 }
 
 .task-manage-button:hover {
-  background-color: var(--accent-color);
+  background-color: var(--primary-color);
+}
+
+.task-manage-button:hover .task-manage-icon {
+  color: var(--text-color-primary);
 }
 
 .task-check__container {
   display: flex;
+  align-items: center;
   flex: 1;
-  gap: 10px;
+  gap: 20px;
 }
 
 .task-checkbox {
+  appearance: none;
+  width: var(--square-btn-sm);
+  height: var(--square-btn-sm);
+  border-radius: var(--border-radius);
+  background-color: var(--taskBtn-background-color-primary);
   cursor: pointer;
+}
+
+.task-checkbox:checked {
+  background-color: var(--primary-color);
+  position: relative;
+}
+
+.task-checkbox:checked::before {
+  content: "";
+  position: absolute;
+  right: 8px;
+  top: 3px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  width: 5px;
+  height: 12px;
 }
 
 .task-text {
@@ -212,7 +312,7 @@ body {
 
 .task-checkbox:checked + .task-text {
   text-decoration: line-through;
-  text-decoration-color: var(--accent-color);
+  text-decoration-color: var(--primary-color);
   text-decoration-thickness: 2px;
 }
 
@@ -229,18 +329,21 @@ body {
 }
 
 .theme-button {
-  background-color: var(--background-opaque-secondary);
+  background-color: var(--theme-background-color-primary);
+  width: var(--square-btn-lg);
+  height: var(--square-btn-lg);
+  transition: var(--transition);
 }
 
 .theme-button:hover {
-  background-color: var(--background-opaque-primary);
+  background-color: var(--theme-background-color-secondary);
 }
 
 .theme-icon {
-  width: 35px;
-  height: 35px;
+  width: var(--square-btn-lg);
+  height: var(--square-btn-lg);
   padding: 6px;
-  color: var(--accent-color);
+  color: var(--forefront-color-primary);
 }
 
 /* tasks' categories & delete buttons */
@@ -264,6 +367,7 @@ body {
 .category-button {
   background-color: transparent;
   color: var(--text-color-secondary);
+  transition: var(--transition);
 }
 
 .category-button:hover {
@@ -271,25 +375,25 @@ body {
 }
 
 .category-button-active {
-  color: var(--accent-color);
+  color: var(--primary-color);
   font-weight: bold;
 }
 
 .remove-button {
-  background-color: var(--background-opaque-secondary);
-  padding: 5px;
+  background-color: transparent;
   color: var(--text-color-primary);
-  height: 27px;
+  transition: var(--transition);
 }
 
 .remove-button:hover {
-  background-color: var(--highlight-color);
+  color: var(--primary-color);
 }
 
 button:disabled {
-  background-color: var(--background-color-btn-disabled);
+  color: var(--disabledBtn-color);
+  transition: var(--transition);
 }
 
 button:disabled:hover {
-  background-color: var(--background-color-btn-disabled);
+  color: var(--disabledBtn-color);
 }
