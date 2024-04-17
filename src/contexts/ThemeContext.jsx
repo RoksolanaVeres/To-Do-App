@@ -8,6 +8,10 @@ export default function ThemeContextProvider({ children }) {
   const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
   const [theme, setTheme] = useState(storedTheme || "light");
 
+  //setting theme attribute to body
+  document.getElementById("body").setAttribute("data-theme", theme);
+
+  // saving theme in the localStorage
   function saveThemeInLocalStorage() {
     localStorage.setItem(THEME_STORAGE_KEY, theme);
   }
@@ -15,7 +19,5 @@ export default function ThemeContextProvider({ children }) {
   useEffect(saveThemeInLocalStorage, [theme]);
 
   const value = { theme, setTheme };
-  return (
-    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }

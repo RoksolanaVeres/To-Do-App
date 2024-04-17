@@ -6,18 +6,10 @@ import { VscChromeClose } from "react-icons/vsc";
 export default function Task({ taskId, task, completed }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState(task);
-  const { setTasks } = useContext(TasksContext);
+  const { deleteSelectedTask, saveEditedTask, toggleTaskStatus } = useContext(TasksContext);
 
   // functions
-  function handleDeleteTask() {
-    setTasks((currentTasks) => {
-      const updatedTasks = structuredClone(currentTasks);
-      delete updatedTasks[taskId];
-      return updatedTasks;
-    });
-  }
-
-  function handleEditTask() {
+  function handleEditTaskClick() {
     setIsEditing(true);
   }
 
@@ -30,25 +22,9 @@ export default function Task({ taskId, task, completed }) {
       if (editedTask === "") {
         return;
       }
-
       setIsEditing(false);
-
-      setTasks((currentTasks) => {
-        const newTasks = structuredClone(currentTasks);
-        newTasks[taskId].task = editedTask;
-        newTasks[taskId].completed = false;
-        return newTasks;
-      });
+      saveEditedTask(taskId, editedTask);
     }
-  }
-
-  function handleTaskCheck(e) {
-    setTasks((currentTasks) => {
-      const newTasks = structuredClone(currentTasks);
-      newTasks[taskId].completed = !newTasks[taskId].completed;
-
-      return newTasks;
-    });
   }
 
   return (
@@ -68,7 +44,7 @@ export default function Task({ taskId, task, completed }) {
             checked={completed}
             id={taskId}
             className="task-checkbox"
-            onChange={handleTaskCheck}
+            onChange={() => toggleTaskStatus(taskId)}
           />
           <label htmlFor={taskId} className="task-text">
             {task}
@@ -77,14 +53,11 @@ export default function Task({ taskId, task, completed }) {
       )}
 
       <div className="edit-delete-btns__container">
-        <button onClick={handleEditTask} className="button task-manage-button">
+        <button onClick={handleEditTaskClick} className="button task-manage-button">
           <BsPencilFill className="task-manage-icon" />
         </button>
 
-        <button
-          onClick={handleDeleteTask}
-          className="button task-manage-button"
-        >
+        <button onClick={() => deleteSelectedTask(taskId)} className="button task-manage-button">
           <VscChromeClose className="task-manage-icon" />
         </button>
       </div>
