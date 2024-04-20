@@ -8,16 +8,13 @@
   --border-radius: 5px;
   --font-size-primary: 18px;
   --font-size-secondary: 13px;
-  --background-image: url(./assets/images/inspiration-theme.jpg);
   --square-btn-lg: 35px;
   --square-btn-sm: 25px;
   --transition: all 0.1s ease-in;
 }
 
 [data-theme="light"] {
-  --background-image: url(./assets/images/light.jpg);
   --background-overlay: rgba(253, 253, 253, 0.758);
-
   /* background */
   --background-color-primary: rgb(198, 198, 198); /*main input */
   --background-color-secondary: rgb(208, 208, 208); /*tasks li */
@@ -28,23 +25,34 @@
   --forefront-color-secondary: rgb(51, 51, 51); /*edit, delete icons */
 
   /* text colors */
-  --text-color-primary: rgb(0, 0, 0); /*input, tasks, (edit, delete):hover, remove, category:hover */
+  --text-color-primary: rgb(
+    0,
+    0,
+    0
+  ); /*input, tasks, (edit, delete):hover, remove, category:hover */
   --text-color-secondary: rgb(83, 83, 83); /*category buttons*/
   --text-color-contrast: rgb(0, 0, 0); /*editing input text*/
 
   /* buttons */
   --theme-background-color-primary: rgb(223, 223, 223); /*theme icons background*/
   --theme-background-color-secondary: rgb(255, 255, 255); /*theme icons background on hover */
-  --taskBtn-background-color-primary: rgb(204, 178, 134); /*empty checkbox, edit, delete button's background*/
+  --taskBtn-background-color-primary: rgb(
+    204,
+    178,
+    134
+  ); /*empty checkbox, edit, delete button's background*/
   --disabledBtn-color: rgb(135, 135, 135);
 
   /* primary color */
-  --primary-color: rgb(218, 142, 2); /*inputs on focus, task manage btns:hover, active category, checked checkbox bg, remove btn:hover, task crossing line*/
+  --primary-color: rgb(
+    218,
+    142,
+    2
+  ); /*inputs on focus, task manage btns:hover, active category, checked checkbox bg, remove btn:hover, task crossing line*/
   --primary-shade: rgb(217, 207, 186); /*editing input bg*/
 }
 
 [data-theme="dark"] {
-  --background-image: url(./assets/images/dark.jpg);
   --background-overlay: rgba(31, 31, 31, 0.773);
 
   /* background */
@@ -57,23 +65,34 @@
   --forefront-color-secondary: rgb(18, 18, 18); /*edit, delete icons */
 
   /* text colors */
-  --text-color-primary: rgb(238, 234, 230); /*main input, tasks, edit, delete icons on hover, remove btns, category btns on hover */
+  --text-color-primary: rgb(
+    238,
+    234,
+    230
+  ); /*main input, tasks, edit, delete icons on hover, remove btns, category btns on hover */
   --text-color-secondary: rgb(121, 121, 121); /*category buttons*/
   --text-color-contrast: rgb(255, 255, 254); /*editing input text*/
 
   /* buttons */
   --theme-background-color-primary: rgb(68, 68, 68); /*theme icons background*/
   --theme-background-color-secondary: rgb(52, 52, 52); /*theme icons background on hover */
-  --taskBtn-background-color-primary: rgb(197, 216, 253); /*empty checkbox, edit, delete button's background*/
+  --taskBtn-background-color-primary: rgb(
+    197,
+    216,
+    253
+  ); /*empty checkbox, edit, delete button's background*/
   --disabledBtn-color: rgb(64, 64, 64);
 
   /* primary color */
-  --primary-color: rgb(47, 93, 185); /*inputs on focus, task manage btns:hover, active category, checked checkbox bg, remove btn:hover, task crossing line*/
+  --primary-color: rgb(
+    47,
+    93,
+    185
+  ); /*inputs on focus, task manage btns:hover, active category, checked checkbox bg, remove btn:hover, task crossing line*/
   --primary-shade: rgb(29, 47, 84); /*editing input bg*/
 }
 
 [data-theme="green"] {
-  --background-image: url(./assets/images/greenery.jpg);
   --background-overlay: rgba(240, 247, 237, 0.753);
 
   /* background */
@@ -86,23 +105,34 @@
   --forefront-color-secondary: rgb(18, 18, 18); /*edit, delete icons */
 
   /* text colors */
-  --text-color-primary: rgb(244, 242, 240); /*main input, tasks, edit, delete icons on hover, remove btns, category btns on hover */
+  --text-color-primary: rgb(
+    244,
+    242,
+    240
+  ); /*main input, tasks, edit, delete icons on hover, remove btns, category btns on hover */
   --text-color-secondary: rgb(175, 193, 176); /*category buttons*/
   --text-color-contrast: rgb(255, 255, 254); /*editing input text*/
 
   /* buttons */
   --theme-background-color-primary: rgb(227, 233, 229); /*theme icons background*/
   --theme-background-color-secondary: rgb(219, 224, 221); /*theme icons background on hover */
-  --taskBtn-background-color-primary: rgb(193, 205, 192); /*empty checkbox, edit, delete button's background*/
+  --taskBtn-background-color-primary: rgb(
+    193,
+    205,
+    192
+  ); /*empty checkbox, edit, delete button's background*/
   --disabledBtn-color: rgb(174, 174, 174);
 
   /* primary color */
-  --primary-color: rgb(65, 27, 16); /*inputs on focus, task manage btns:hover, active category, checked checkbox bg, remove btn:hover, task crossing line*/
+  --primary-color: rgb(
+    65,
+    27,
+    16
+  ); /*inputs on focus, task manage btns:hover, active category, checked checkbox bg, remove btn:hover, task crossing line*/
   --primary-shade: rgba(65, 27, 16, 0.63); /*editing input bg*/
 }
 
 [data-theme="floral"] {
-  --background-image: url(./assets/images/flower.jpg);
   --background-overlay: rgba(252, 251, 251, 0.733);
 
   /* background */
@@ -115,18 +145,30 @@
   --forefront-color-secondary: rgb(18, 18, 18); /*edit, delete icons */
 
   /* text colors */
-  --text-color-primary: rgb(48, 11, 2); /*main input, tasks, edit, delete icons on hover, remove btns, category btns on hover */
+  --text-color-primary: rgb(
+    48,
+    11,
+    2
+  ); /*main input, tasks, edit, delete icons on hover, remove btns, category btns on hover */
   --text-color-secondary: rgb(130, 102, 95); /*category buttons*/
   --text-color-contrast: rgb(255, 255, 254); /*editing input text*/
 
   /* buttons */
   --theme-background-color-primary: rgb(234, 215, 216); /*theme icons background*/
   --theme-background-color-secondary: rgb(249, 232, 233); /*theme icons background on hover */
-  --taskBtn-background-color-primary: rgb(252, 214, 226); /*empty checkbox, edit, delete button's background*/
+  --taskBtn-background-color-primary: rgb(
+    252,
+    214,
+    226
+  ); /*empty checkbox, edit, delete button's background*/
   --disabledBtn-color: rgb(174, 174, 174);
 
   /* primary color */
-  --primary-color: rgb(241, 75, 128); /*inputs on focus, task manage btns:hover, active category, checked checkbox bg, remove btn:hover, task crossing line*/
+  --primary-color: rgb(
+    241,
+    75,
+    128
+  ); /*inputs on focus, task manage btns:hover, active category, checked checkbox bg, remove btn:hover, task crossing line*/
   --primary-shade: rgba(170, 68, 100, 0.518); /*editing input bg*/
 }
 
@@ -144,7 +186,6 @@ body {
 
 .app-container {
   min-height: 100vh;
-  background-image: var(--background-image);
   background-size: cover;
   background-position: center;
 }

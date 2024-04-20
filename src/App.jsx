@@ -2,6 +2,7 @@ import { useRef, useContext, useState } from "react";
 import Task from "./components/Task";
 import { TasksContext } from "./contexts/TasksContext";
 import ThemeButtons from "./components/ThemeButtons";
+import { ThemeContext } from "./contexts/ThemeContext";
 
 export default function App() {
   const {
@@ -13,6 +14,7 @@ export default function App() {
   } = useContext(TasksContext);
   const [taskCategory, setTaskCategory] = useState("all");
   const inputRef = useRef(null);
+  const { theme } = useContext(ThemeContext);
 
   // calculate number of all, completed, active tasks
   const allTasksNum = Object.keys(tasks).length;
@@ -32,7 +34,7 @@ export default function App() {
   }
 
   return (
-    <div className="app-container">
+    <div className="app-container" style={{ backgroundImage: `url(${theme}.jpg)` }}>
       <div className={`overlay-container ${Object.keys(tasks).length > 0 ? "overlay" : undefined}`}>
         <header className="header-container">
           <ThemeButtons />
