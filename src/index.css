@@ -14,7 +14,7 @@
 }
 
 [data-theme="light"] {
-  --background-overlay: rgba(253, 253, 253, 0.758);
+  --background-overlay: rgba(246, 246, 246, 0.181);
   /* background */
   --background-color-primary: rgb(198, 198, 198); /*main input */
   --background-color-secondary: rgb(208, 208, 208); /*tasks li */
@@ -53,7 +53,7 @@
 }
 
 [data-theme="dark"] {
-  --background-overlay: rgba(31, 31, 31, 0.773);
+  --background-overlay: rgba(0, 0, 0, 0.201);
 
   /* background */
   --background-color-primary: rgb(12, 13, 16); /*main input */
@@ -93,7 +93,7 @@
 }
 
 [data-theme="green"] {
-  --background-overlay: rgba(240, 247, 237, 0.753);
+  --background-overlay: rgba(149, 163, 151, 0.103);
 
   /* background */
   --background-color-primary: rgb(72, 118, 38); /*main input */
@@ -133,7 +133,7 @@
 }
 
 [data-theme="floral"] {
-  --background-overlay: rgba(252, 251, 251, 0.733);
+  --background-overlay: rgba(255, 246, 246, 0.1);
 
   /* background */
   --background-color-primary: rgb(255, 207, 197); /*main input */
@@ -259,8 +259,9 @@ body {
 }
 
 .overlay {
-  background-color: var(--background-overlay);
-  box-shadow: 0 0 10px 10px var(--background-overlay);
+  background: var(--background-overlay);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 /* tasks */
