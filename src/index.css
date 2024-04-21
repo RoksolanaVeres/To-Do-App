@@ -279,12 +279,19 @@ body {
   background-color: var(--background-color-secondary);
   cursor: pointer;
   padding: 5px;
-  display: flex;
   gap: 10px;
   justify-content: space-between;
   align-items: center;
   border-radius: var(--border-radius);
   transition: var(--transition);
+}
+
+.visible-task {
+  display: flex;
+}
+
+.hidden-task {
+  display: none;
 }
 
 .task-li:hover {

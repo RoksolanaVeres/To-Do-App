@@ -14,16 +14,26 @@ export default function App() {
     addNewTaskFromInput,
     getTasksOfSelectedCategory,
   } = useContext(TasksContext);
+
+  console.log(tasks);
+
   const [taskCategory, setTaskCategory] = useState("all");
   const inputRef = useRef(null);
   const { theme } = useContext(ThemeContext);
 
   // calculate number of all, completed, active tasks
-  const allTasksNum = Object.keys(tasks).length;
-  const completedTasksNum = Object.values(tasks).filter((task) => task.completed === true).length;
-  const activeTasksNum = allTasksNum - completedTasksNum;
+  // const allTasksNum = Object.keys(tasks).length;
+  // const completedTasksNum = Object.values(tasks).filter((task) => task.completed === true).length;
+  // const activeTasksNum = allTasksNum - completedTasksNum;
 
-  const tasksToDisplay = getTasksOfSelectedCategory(taskCategory);
+  function hideTasksOfOtherCategories(task) {
+    if (
+      (taskCategory === "completed" && !task.completed) ||
+      (taskCategory === "active" && task.completed)
+    ) {
+      return "hidden-task";
+    }
+  }
 
   //Functions
   function handleSubmit(e) {
@@ -37,7 +47,7 @@ export default function App() {
 
   return (
     <div className="app-container" style={{ backgroundImage: `url(${theme}.jpg)` }}>
-      <div className={`overlay-container ${Object.keys(tasks).length > 0 ? "overlay" : undefined}`}>
+      <div className={`overlay-container ${tasks.length > 0 ? "overlay" : undefined}`}>
         <header className="header-container">
           <ThemeButtons />
           <form action="" onSubmit={handleSubmit} className="form-container">
@@ -51,15 +61,19 @@ export default function App() {
         </header>
 
         <main className="main-container">
-          {Object.keys(tasks).length > 0 && (
+          {tasks.length > 0 && (
             <>
               <Reorder.Group values={tasks} onReorder={setTasks} className="tasks-list">
-                {Object.keys(tasksToDisplay).map((taskId) => (
-                  <Reorder.Item key={taskId} value={tasks} className="task-li">
+                {tasks.map((task) => (
+                  <Reorder.Item
+                    key={task.taskId}
+                    value={task}
+                    className={`task-li visible-task ${hideTasksOfOtherCategories(task)} `}
+                  >
                     <Task
-                      taskId={taskId}
-                      task={tasksToDisplay[taskId].task}
-                      completed={tasksToDisplay[taskId].completed}
+                      taskId={task.taskId}
+                      taskText={task.taskText}
+                      completed={task.completed}
                     />
                   </Reorder.Item>
                 ))}
@@ -76,7 +90,7 @@ export default function App() {
                       taskCategory === "all" ? "category-button-active" : undefined
                     }`}
                   >
-                    All({allTasksNum})
+                    All()
                   </button>
                   <button
                     onClick={() => setTaskCategory("active")}
@@ -84,7 +98,7 @@ export default function App() {
                       taskCategory === "active" ? "category-button-active" : undefined
                     }`}
                   >
-                    Active({activeTasksNum})
+                    Active()
                   </button>
                   <button
                     onClick={() => setTaskCategory("completed")}
@@ -92,13 +106,13 @@ export default function App() {
                       taskCategory === "completed" ? "category-button-active" : undefined
                     }`}
                   >
-                    Completed({completedTasksNum})
+                    Completed()
                   </button>
                 </div>
 
                 <button
                   onClick={deleteCompletedTasks}
-                  disabled={!completedTasksNum}
+                  // disabled={!completedTasksNum}
                   className="button remove-button"
                 >
                   Remove completed
