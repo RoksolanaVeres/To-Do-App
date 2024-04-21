@@ -3,7 +3,7 @@ import Task from "./components/Task";
 import { TasksContext } from "./contexts/TasksContext";
 import ThemeButtons from "./components/ThemeButtons";
 import { ThemeContext } from "./contexts/ThemeContext";
-import { Reorder } from "framer-motion";
+import { Reorder, AnimatePresence } from "framer-motion";
 
 export default function App() {
   const {
@@ -12,21 +12,16 @@ export default function App() {
     deleteAllTasks,
     deleteCompletedTasks,
     addNewTaskFromInput,
-    getTasksOfSelectedCategory,
+    showTasksInNums,
   } = useContext(TasksContext);
-
-  console.log(tasks);
-
+  const { theme } = useContext(ThemeContext);
   const [taskCategory, setTaskCategory] = useState("all");
   const inputRef = useRef(null);
-  const { theme } = useContext(ThemeContext);
 
-  // calculate number of all, completed, active tasks
-  // const allTasksNum = Object.keys(tasks).length;
-  // const completedTasksNum = Object.values(tasks).filter((task) => task.completed === true).length;
-  // const activeTasksNum = allTasksNum - completedTasksNum;
+  const { allTasksNum, activeTasksNum, completedTasksNum } = showTasksInNums();
 
-  function hideTasksOfOtherCategories(task) {
+  //Functions
+  function setClassTohideTasksOfOtherCategories(task) {
     if (
       (taskCategory === "completed" && !task.completed) ||
       (taskCategory === "active" && task.completed)
@@ -35,7 +30,6 @@ export default function App() {
     }
   }
 
-  //Functions
   function handleSubmit(e) {
     e.preventDefault();
     if (inputRef.current.value === "") {
@@ -64,19 +58,26 @@ export default function App() {
           {tasks.length > 0 && (
             <>
               <Reorder.Group values={tasks} onReorder={setTasks} className="tasks-list">
-                {tasks.map((task) => (
-                  <Reorder.Item
-                    key={task.taskId}
-                    value={task}
-                    className={`task-li visible-task ${hideTasksOfOtherCategories(task)} `}
-                  >
-                    <Task
-                      taskId={task.taskId}
-                      taskText={task.taskText}
-                      completed={task.completed}
-                    />
-                  </Reorder.Item>
-                ))}
+                <AnimatePresence>
+                  {tasks.map((task) => (
+                    <Reorder.Item
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      key={task.taskId}
+                      value={task}
+                      className={`task-li visible-task ${setClassTohideTasksOfOtherCategories(
+                        task
+                      )} `}
+                    >
+                      <Task
+                        taskId={task.taskId}
+                        taskText={task.taskText}
+                        completed={task.completed}
+                      />
+                    </Reorder.Item>
+                  ))}
+                </AnimatePresence>
               </Reorder.Group>
 
               <div className="categories-deleteBtns__container">
@@ -90,7 +91,7 @@ export default function App() {
                       taskCategory === "all" ? "category-button-active" : undefined
                     }`}
                   >
-                    All()
+                    All({allTasksNum})
                   </button>
                   <button
                     onClick={() => setTaskCategory("active")}
@@ -98,7 +99,7 @@ export default function App() {
                       taskCategory === "active" ? "category-button-active" : undefined
                     }`}
                   >
-                    Active()
+                    Active({activeTasksNum})
                   </button>
                   <button
                     onClick={() => setTaskCategory("completed")}
@@ -106,13 +107,13 @@ export default function App() {
                       taskCategory === "completed" ? "category-button-active" : undefined
                     }`}
                   >
-                    Completed()
+                    Completed({completedTasksNum})
                   </button>
                 </div>
 
                 <button
                   onClick={deleteCompletedTasks}
-                  // disabled={!completedTasksNum}
+                  disabled={!completedTasksNum}
                   className="button remove-button"
                 >
                   Remove completed

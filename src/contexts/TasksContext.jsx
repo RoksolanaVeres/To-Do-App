@@ -29,16 +29,14 @@ export default function TasksContextProvider({ children }) {
 
   function deleteSelectedTask(taskID) {
     setTasks((currentTasks) => {
-      const tasksCopy = structuredClone(currentTasks);
-      const filteredTasks = tasksCopy.filter((task) => task.taskId !== taskID);
+      const filteredTasks = [...currentTasks].filter((task) => task.taskId !== taskID);
       return filteredTasks;
     });
   }
 
   function deleteCompletedTasks() {
     setTasks((currentTasks) => {
-      const tasksCopy = structuredClone(currentTasks);
-      const filteredTasks = tasksCopy.filter((task) => task.completed === false);
+      const filteredTasks = [...currentTasks].filter((task) => task.completed === false);
       return filteredTasks;
     });
   }
@@ -70,6 +68,17 @@ export default function TasksContextProvider({ children }) {
     });
   }
 
+  function showTasksInNums() {
+    const allTasksNum = tasks.length;
+    const completedTasksNum = [...tasks].filter((task) => task.completed).length;
+    const activeTasksNum = allTasksNum - completedTasksNum;
+    return {
+      allTasksNum,
+      activeTasksNum,
+      completedTasksNum,
+    };
+  }
+
   const value = {
     tasks,
     setTasks,
@@ -79,6 +88,7 @@ export default function TasksContextProvider({ children }) {
     deleteSelectedTask,
     saveEditedTask,
     toggleTaskStatus,
+    showTasksInNums,
   };
 
   return <TasksContext.Provider value={value}>{children}</TasksContext.Provider>;
