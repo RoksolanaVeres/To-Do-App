@@ -3,10 +3,12 @@ import Task from "./components/Task";
 import { TasksContext } from "./contexts/TasksContext";
 import ThemeButtons from "./components/ThemeButtons";
 import { ThemeContext } from "./contexts/ThemeContext";
+import { Reorder } from "framer-motion";
 
 export default function App() {
   const {
     tasks,
+    setTasks,
     deleteAllTasks,
     deleteCompletedTasks,
     addNewTaskFromInput,
@@ -51,11 +53,17 @@ export default function App() {
         <main className="main-container">
           {Object.keys(tasks).length > 0 && (
             <>
-              <ul className="tasks-list">
-                {Object.entries(tasksToDisplay).map(([taskId, { task, completed }]) => (
-                  <Task key={taskId} taskId={taskId} task={task} completed={completed} />
+              <Reorder.Group values={tasks} onReorder={setTasks} className="tasks-list">
+                {Object.keys(tasksToDisplay).map((taskId) => (
+                  <Reorder.Item key={taskId} value={tasks} className="task-li">
+                    <Task
+                      taskId={taskId}
+                      task={tasksToDisplay[taskId].task}
+                      completed={tasksToDisplay[taskId].completed}
+                    />
+                  </Reorder.Item>
                 ))}
-              </ul>
+              </Reorder.Group>
 
               <div className="categories-deleteBtns__container">
                 <button type="button" onClick={deleteAllTasks} className="button remove-button">

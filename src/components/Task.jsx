@@ -28,7 +28,7 @@ export default function Task({ taskId, task, completed }) {
   }
 
   return (
-    <li className="task-li">
+    <>
       {isEditing ? (
         <input
           className="editing-input"
@@ -61,6 +61,6 @@ export default function Task({ taskId, task, completed }) {
           <VscChromeClose className="task-manage-icon" />
         </button>
       </div>
-    </li>
+    </>
   );
 }
