@@ -79,6 +79,12 @@ export default function App() {
                   ))}
                 </AnimatePresence>
               </Reorder.Group>
+              {taskCategory === "active" && !activeTasksNum && (
+                <p className="no-tasks__message">Congrats! You've completed all your tasks</p>
+              )}
+              {taskCategory === "completed" && !completedTasksNum && (
+                <p className="no-tasks__message">You have no completed tasks yet :(</p>
+              )}
 
               <div className="categories-deleteBtns__container">
                 <button type="button" onClick={deleteAllTasks} className="button remove-button">

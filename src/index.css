@@ -45,9 +45,9 @@
 
   /* primary color */
   --primary-color: rgb(
-    218,
-    142,
-    2
+    169,
+    111,
+    4
   ); /*inputs on focus, task manage btns:hover, active category, checked checkbox bg, remove btn:hover, task crossing line*/
   --primary-shade: rgb(217, 207, 186); /*editing input bg*/
 }
@@ -85,9 +85,9 @@
 
   /* primary color */
   --primary-color: rgb(
-    47,
-    93,
-    185
+    117,
+    163,
+    255
   ); /*inputs on focus, task manage btns:hover, active category, checked checkbox bg, remove btn:hover, task crossing line*/
   --primary-shade: rgb(29, 47, 84); /*editing input bg*/
 }
@@ -286,14 +286,6 @@ body {
   transition: var(--transition);
 }
 
-.visible-task {
-  display: flex;
-}
-
-.hidden-task {
-  display: none;
-}
-
 .task-li:hover {
   background-color: var(--background-color-secondary-lighter);
   border-radius: var(--border-radius);
@@ -368,6 +360,18 @@ body {
 .edit-delete-btns__container {
   display: flex;
   gap: 5px;
+}
+
+.visible-task {
+  display: flex;
+}
+
+.hidden-task {
+  display: none;
+}
+
+.no-tasks__message {
+  color: var(--primary-color);
 }
 
 /* themes */
