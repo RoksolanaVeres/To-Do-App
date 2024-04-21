@@ -3,9 +3,9 @@ import { TasksContext } from "../contexts/TasksContext";
 import { BsPencilFill } from "react-icons/bs";
 import { VscChromeClose } from "react-icons/vsc";
 
-export default function Task({ taskId, task, completed }) {
+export default function Task({ taskId, taskText, completed }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedTask, setEditedTask] = useState(task);
+  const [editedTask, setEditedTask] = useState(taskText);
   const { deleteSelectedTask, saveEditedTask, toggleTaskStatus } = useContext(TasksContext);
 
   // functions
@@ -28,7 +28,7 @@ export default function Task({ taskId, task, completed }) {
   }
 
   return (
-    <li className="task-li">
+    <>
       {isEditing ? (
         <input
           className="editing-input"
@@ -47,7 +47,7 @@ export default function Task({ taskId, task, completed }) {
             onChange={() => toggleTaskStatus(taskId)}
           />
           <label htmlFor={taskId} className="task-text">
-            {task}
+            {taskText}
           </label>
         </div>
       )}
@@ -61,6 +61,6 @@ export default function Task({ taskId, task, completed }) {
           <VscChromeClose className="task-manage-icon" />
         </button>
       </div>
-    </li>
+    </>
   );
 }

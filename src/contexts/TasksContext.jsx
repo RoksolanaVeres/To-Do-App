@@ -6,7 +6,7 @@ export const TasksContext = createContext(null);
 
 export default function TasksContextProvider({ children }) {
   const storedTasks = JSON.parse(localStorage.getItem(TASKS_STORAGE_KEY));
-  const [tasks, setTasks] = useState(storedTasks || {});
+  const [tasks, setTasks] = useState(storedTasks || []);
 
   // saving tasks in localStorage
   function saveTasksinLocalStorage() {
@@ -23,45 +23,37 @@ export default function TasksContextProvider({ children }) {
     let inputValue = inputRef.current.value;
 
     setTasks((currentTasks) => {
-      return {
-        ...currentTasks,
-        [taskID]: { task: inputValue, completed: false },
-      };
+      return [...currentTasks, { taskId: taskID, taskText: inputValue, completed: false }];
     });
   }
 
   function deleteSelectedTask(taskID) {
     setTasks((currentTasks) => {
-      const updatedTasks = structuredClone(currentTasks);
-      delete updatedTasks[taskID];
-      return updatedTasks;
+      const filteredTasks = [...currentTasks].filter((task) => task.taskId !== taskID);
+      return filteredTasks;
     });
   }
 
   function deleteCompletedTasks() {
     setTasks((currentTasks) => {
-      const newTasks = { ...currentTasks };
-      Object.keys(newTasks).forEach((key) => {
-        if (newTasks[key].completed) {
-          delete newTasks[key];
-        }
-      });
-      return newTasks;
+      const filteredTasks = [...currentTasks].filter((task) => task.completed === false);
+      return filteredTasks;
     });
   }
 
   function deleteAllTasks() {
-    if (Object.keys(tasks).length === 0) {
+    if (tasks.length === 0) {
       return;
     }
-    setTasks({});
+    setTasks([]);
   }
 
   function saveEditedTask(taskId, editedTask) {
     setTasks((currentTasks) => {
       const newTasks = structuredClone(currentTasks);
-      newTasks[taskId].task = editedTask;
-      newTasks[taskId].completed = false;
+      const updatedTask = newTasks.find((task) => task.taskId === taskId);
+      updatedTask.taskText = editedTask;
+      updatedTask.completed = false;
       return newTasks;
     });
   }
@@ -69,34 +61,22 @@ export default function TasksContextProvider({ children }) {
   function toggleTaskStatus(taskId) {
     setTasks((currentTasks) => {
       const newTasks = structuredClone(currentTasks);
-      newTasks[taskId].completed = !newTasks[taskId].completed;
+      const checkedTask = newTasks.find((task) => task.taskId === taskId);
+      checkedTask.completed = !checkedTask.completed;
 
       return newTasks;
     });
   }
 
-  function getTasksOfSelectedCategory(tasksCategory) {
-    let selectedCategoryTasks = undefined;
-    const tasksCopy = structuredClone(tasks);
-
-    if (tasksCategory === "completed") {
-      Object.keys(tasksCopy).forEach((key) => {
-        if (!tasksCopy[key].completed) {
-          delete tasksCopy[key];
-        }
-      });
-      selectedCategoryTasks = tasksCopy;
-    } else if (tasksCategory === "active") {
-      Object.keys(tasksCopy).forEach((key) => {
-        if (tasksCopy[key].completed) {
-          delete tasksCopy[key];
-        }
-      });
-      selectedCategoryTasks = tasksCopy;
-    } else {
-      selectedCategoryTasks = tasksCopy;
-    }
-    return selectedCategoryTasks;
+  function showTasksInNums() {
+    const allTasksNum = tasks.length;
+    const completedTasksNum = [...tasks].filter((task) => task.completed).length;
+    const activeTasksNum = allTasksNum - completedTasksNum;
+    return {
+      allTasksNum,
+      activeTasksNum,
+      completedTasksNum,
+    };
   }
 
   const value = {
@@ -108,7 +88,7 @@ export default function TasksContextProvider({ children }) {
     deleteSelectedTask,
     saveEditedTask,
     toggleTaskStatus,
-    getTasksOfSelectedCategory,
+    showTasksInNums,
   };
 
   return <TasksContext.Provider value={value}>{children}</TasksContext.Provider>;
