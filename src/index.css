@@ -405,6 +405,7 @@ body {
   width: 80%;
   max-width: 500px;
   display: flex;
+  gap: 10px;
   justify-content: space-between;
   align-items: stretch;
   background-color: var(--background-color-primary);
@@ -449,4 +450,22 @@ button:disabled {
 
 button:disabled:hover {
   color: var(--disabledBtn-color);
+}
+
+@media (max-width: 600px) {
+  .categories__container {
+    flex-direction: column;
+  }
+
+  .form-container {
+    width: 100%;
+  }
+
+  .tasks-list {
+    width: 100%;
+  }
+
+  .categories-deleteBtns__container {
+    width: 100%;
+  }
 }
