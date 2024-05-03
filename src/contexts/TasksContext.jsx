@@ -1,76 +1,67 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useReducer, useEffect } from "react";
 
 const TASKS_STORAGE_KEY = "my tasks";
 
 export const TasksContext = createContext(null);
 
+export const ACTIONS = {
+  ADD_NEW_TASK: "add-new-task",
+  DELETE_SELECTED_TASK: "delete-selected-task",
+  DELETE_COMPLETED_TASKS: "delete-completed-tasks",
+  DELETE_ALL_TASKS: "delete-all-tasks",
+  SAVE_EDITED_TASKS: "save-edited-tasks",
+  TOGGLE_TASK_STATUS: "toggle-task-status",
+};
+
+function tasksReducer(state, action) {
+  switch (action.type) {
+    case ACTIONS.ADD_NEW_TASK:
+      return [
+        ...state,
+        { taskId: crypto.randomUUID(), taskText: action.payload.inputText, completed: false },
+      ];
+    case ACTIONS.DELETE_SELECTED_TASK:
+      return [...state].filter((task) => task.taskId !== action.payload.taskId);
+    case ACTIONS.DELETE_COMPLETED_TASKS:
+      return [...state].filter((task) => task.completed === false);
+    case ACTIONS.DELETE_ALL_TASKS:
+      if (state.length === 0) {
+        return;
+      } else {
+        return (state = []);
+      }
+    case ACTIONS.SAVE_EDITED_TASKS:
+      const newTasks = structuredClone(state);
+      const updatedTask = newTasks.find((task) => task.taskId === action.payload.taskId);
+      updatedTask.taskText = action.payload.editedTask;
+      updatedTask.completed = false;
+      return newTasks;
+    case ACTIONS.TOGGLE_TASK_STATUS:
+      const updatedTasks = structuredClone(state);
+      const checkedTask = updatedTasks.find((task) => task.taskId === action.payload.taskId);
+      checkedTask.completed = !checkedTask.completed;
+      return updatedTasks;
+  }
+}
+
 export default function TasksContextProvider({ children }) {
   const storedTasks = JSON.parse(localStorage.getItem(TASKS_STORAGE_KEY));
-  const [tasks, setTasks] = useState(storedTasks || []);
+  const [tasksState, tasksDispatch] = useReducer(tasksReducer, storedTasks || []);
+
+  console.log(tasksState);
 
   // saving tasks in localStorage
   function saveTasksinLocalStorage() {
-    localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasks));
+    localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasksState));
   }
 
   useEffect(() => {
     saveTasksinLocalStorage();
-  }, [tasks]);
-
-  // functions
-  function addNewTaskFromInput(inputRef) {
-    let taskID = crypto.randomUUID();
-    let inputValue = inputRef.current.value;
-
-    setTasks((currentTasks) => {
-      return [...currentTasks, { taskId: taskID, taskText: inputValue, completed: false }];
-    });
-  }
-
-  function deleteSelectedTask(taskID) {
-    setTasks((currentTasks) => {
-      const filteredTasks = [...currentTasks].filter((task) => task.taskId !== taskID);
-      return filteredTasks;
-    });
-  }
-
-  function deleteCompletedTasks() {
-    setTasks((currentTasks) => {
-      const filteredTasks = [...currentTasks].filter((task) => task.completed === false);
-      return filteredTasks;
-    });
-  }
-
-  function deleteAllTasks() {
-    if (tasks.length === 0) {
-      return;
-    }
-    setTasks([]);
-  }
-
-  function saveEditedTask(taskId, editedTask) {
-    setTasks((currentTasks) => {
-      const newTasks = structuredClone(currentTasks);
-      const updatedTask = newTasks.find((task) => task.taskId === taskId);
-      updatedTask.taskText = editedTask;
-      updatedTask.completed = false;
-      return newTasks;
-    });
-  }
-
-  function toggleTaskStatus(taskId) {
-    setTasks((currentTasks) => {
-      const newTasks = structuredClone(currentTasks);
-      const checkedTask = newTasks.find((task) => task.taskId === taskId);
-      checkedTask.completed = !checkedTask.completed;
-
-      return newTasks;
-    });
-  }
+  }, [tasksState]);
 
   function showTasksInNums() {
-    const allTasksNum = tasks.length;
-    const completedTasksNum = [...tasks].filter((task) => task.completed).length;
+    const allTasksNum = tasksState.length;
+    const completedTasksNum = [...tasksState].filter((task) => task.completed).length;
     const activeTasksNum = allTasksNum - completedTasksNum;
     return {
       allTasksNum,
@@ -79,17 +70,7 @@ export default function TasksContextProvider({ children }) {
     };
   }
 
-  const value = {
-    tasks,
-    setTasks,
-    addNewTaskFromInput,
-    deleteAllTasks,
-    deleteCompletedTasks,
-    deleteSelectedTask,
-    saveEditedTask,
-    toggleTaskStatus,
-    showTasksInNums,
-  };
+  const value = { tasksState, tasksDispatch, showTasksInNums };
 
   return <TasksContext.Provider value={value}>{children}</TasksContext.Provider>;
 }

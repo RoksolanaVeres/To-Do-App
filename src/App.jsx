@@ -4,16 +4,10 @@ import { TasksContext } from "./contexts/TasksContext";
 import ThemeButtons from "./components/ThemeButtons";
 import { ThemeContext } from "./contexts/ThemeContext";
 import { Reorder, AnimatePresence } from "framer-motion";
+import { ACTIONS } from "./contexts/TasksContext";
 
 export default function App() {
-  const {
-    tasks,
-    setTasks,
-    deleteAllTasks,
-    deleteCompletedTasks,
-    addNewTaskFromInput,
-    showTasksInNums,
-  } = useContext(TasksContext);
+  const { tasksState, tasksDispatch, showTasksInNums } = useContext(TasksContext);
   const { theme } = useContext(ThemeContext);
   const [taskCategory, setTaskCategory] = useState("all");
   const inputRef = useRef(null);
@@ -35,13 +29,13 @@ export default function App() {
     if (inputRef.current.value === "") {
       return;
     }
-    addNewTaskFromInput(inputRef);
+    tasksDispatch({ type: ACTIONS.ADD_NEW_TASK, payload: { inputText: inputRef.current.value } });
     inputRef.current.value = "";
   }
 
   return (
     <div className="app-container" style={{ backgroundImage: `url(${theme}.jpg)` }}>
-      <div className={`overlay-container ${tasks.length > 0 ? "overlay" : undefined}`}>
+      <div className={`overlay-container ${tasksState.length > 0 ? "overlay" : undefined}`}>
         <header className="header-container">
           <ThemeButtons />
           <form action="" onSubmit={handleSubmit} className="form-container">
@@ -55,30 +49,17 @@ export default function App() {
         </header>
 
         <main className="main-container">
-          {tasks.length > 0 && (
+          {tasksState.length > 0 && (
             <>
-              <Reorder.Group values={tasks} onReorder={setTasks} className="tasks-list">
-                <AnimatePresence>
-                  {tasks.map((task) => (
-                    <Reorder.Item
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      key={task.taskId}
-                      value={task}
-                      className={`task-li visible-task ${setClassTohideTasksOfOtherCategories(
-                        task
-                      )} `}
-                    >
-                      <Task
-                        taskId={task.taskId}
-                        taskText={task.taskText}
-                        completed={task.completed}
-                      />
-                    </Reorder.Item>
-                  ))}
-                </AnimatePresence>
-              </Reorder.Group>
+              {tasksState.map((task) => (
+                <Task
+                  key={task.taskId}
+                  taskId={task.taskId}
+                  taskText={task.taskText}
+                  completed={task.completed}
+                />
+              ))}
+
               {taskCategory === "active" && !activeTasksNum && (
                 <p className="no-tasks__message">Congrats! You've completed all your tasks</p>
               )}
@@ -87,7 +68,11 @@ export default function App() {
               )}
 
               <div className="categories-deleteBtns__container">
-                <button type="button" onClick={deleteAllTasks} className="button remove-button">
+                <button
+                  type="button"
+                  onClick={() => tasksDispatch({ type: ACTIONS.DELETE_ALL_TASKS })}
+                  className="button remove-button"
+                >
                   Remove all
                 </button>
                 <div className="categories__container">
@@ -118,7 +103,7 @@ export default function App() {
                 </div>
 
                 <button
-                  onClick={deleteCompletedTasks}
+                  onClick={() => tasksDispatch({ type: ACTIONS.DELETE_COMPLETED_TASKS })}
                   disabled={!completedTasksNum}
                   className="button remove-button"
                 >

@@ -2,11 +2,12 @@ import { useState, useContext } from "react";
 import { TasksContext } from "../contexts/TasksContext";
 import { BsPencilFill } from "react-icons/bs";
 import { VscChromeClose } from "react-icons/vsc";
+import { ACTIONS } from "../contexts/TasksContext";
 
 export default function Task({ taskId, taskText, completed }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState(taskText);
-  const { deleteSelectedTask, saveEditedTask, toggleTaskStatus } = useContext(TasksContext);
+  const { tasksState, tasksDispatch, showTasksInNums } = useContext(TasksContext);
 
   // functions
   function handleEditTaskClick() {
@@ -23,7 +24,7 @@ export default function Task({ taskId, taskText, completed }) {
         return;
       }
       setIsEditing(false);
-      saveEditedTask(taskId, editedTask);
+      tasksDispatch({ type: ACTIONS.SAVE_EDITED_TASKS, payload: { taskId, editedTask } });
     }
   }
 
@@ -44,7 +45,9 @@ export default function Task({ taskId, taskText, completed }) {
             checked={completed}
             id={taskId}
             className="task-checkbox"
-            onChange={() => toggleTaskStatus(taskId)}
+            onChange={() =>
+              tasksDispatch({ type: ACTIONS.TOGGLE_TASK_STATUS, payload: { taskId } })
+            }
           />
           <label htmlFor={taskId} className="task-text">
             {taskText}
@@ -57,7 +60,10 @@ export default function Task({ taskId, taskText, completed }) {
           <BsPencilFill className="task-manage-icon" />
         </button>
 
-        <button onClick={() => deleteSelectedTask(taskId)} className="button task-manage-button">
+        <button
+          onClick={() => tasksDispatch({ type: ACTIONS.DELETE_SELECTED_TASK, payload: { taskId } })}
+          className="button task-manage-button"
+        >
           <VscChromeClose className="task-manage-icon" />
         </button>
       </div>
