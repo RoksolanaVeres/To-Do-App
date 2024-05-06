@@ -11,6 +11,7 @@ export const ACTIONS = {
   DELETE_ALL_TASKS: "delete-all-tasks",
   SAVE_EDITED_TASKS: "save-edited-tasks",
   TOGGLE_TASK_STATUS: "toggle-task-status",
+  REORDER_TASKS: "reorder-tasks",
 };
 
 function tasksReducer(state, action) {
@@ -41,6 +42,8 @@ function tasksReducer(state, action) {
       const checkedTask = updatedTasks.find((task) => task.taskId === action.payload.taskId);
       checkedTask.completed = !checkedTask.completed;
       return updatedTasks;
+    case ACTIONS.REORDER_TASKS:
+      return action.payload;
   }
 }
 

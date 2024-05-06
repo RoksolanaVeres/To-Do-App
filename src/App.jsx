@@ -51,14 +51,35 @@ export default function App() {
         <main className="main-container">
           {tasksState.length > 0 && (
             <>
-              {tasksState.map((task) => (
-                <Task
-                  key={task.taskId}
-                  taskId={task.taskId}
-                  taskText={task.taskText}
-                  completed={task.completed}
-                />
-              ))}
+              <Reorder.Group
+                values={tasksState}
+                onReorder={(newState) =>
+                  tasksDispatch({ type: ACTIONS.REORDER_TASKS, payload: newState })
+                }
+                className="tasks-list"
+              >
+                <AnimatePresence>
+                  {tasksState.map((task) => (
+                    <Reorder.Item
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      key={task.taskId}
+                      value={task}
+                      className={`task-li visible-task ${setClassTohideTasksOfOtherCategories(
+                        task
+                      )} `}
+                    >
+                      <Task
+                        key={task.taskId}
+                        taskId={task.taskId}
+                        taskText={task.taskText}
+                        completed={task.completed}
+                      />
+                    </Reorder.Item>
+                  ))}
+                </AnimatePresence>
+              </Reorder.Group>
 
               {taskCategory === "active" && !activeTasksNum && (
                 <p className="no-tasks__message">Congrats! You've completed all your tasks</p>
